@@ -32,13 +32,13 @@ public sealed partial class MultiBlockEnergyManagmentComponent : Component
     /// expects the battery component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public string[] EnergyProvidingTypes = {"EnergyTransfair"};
+    public string[] EnergyProvidingTypes = { "EnergyTransfair" };
 
     /// <summary>
     /// expects the multiblock energy storage comp
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public string[] EnergyCapacityTypes = {"EnergyCapacityProvider"};
+    public string[] EnergyCapacityTypes = { "EnergyCapacityProvider" };
 
 }
 

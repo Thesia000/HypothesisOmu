@@ -14,7 +14,7 @@ namespace Content.Server._Omu._BSD.SignalSCI;
 /// </summary>
 public sealed partial class SignalMapSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _MapSys = default!;
+    [Dependency] private readonly SharedMapSystem _mapSys = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     public override void Initialize()
@@ -25,25 +25,25 @@ public sealed partial class SignalMapSystem : EntitySystem
     {
         base.Update(frameTime);
         var mapQuerry = AllEntityQuery<SignalMapComponent>();
-        while(mapQuerry.MoveNext(out var mapEnt, out var comp))
+        while (mapQuerry.MoveNext(out var mapEnt, out var comp))
         {
-            if(comp.SignalList.Count - comp.DesiredAmountOfSignals <= comp.SignalAmountVariance)continue;
-            while(comp.SignalList.Count < comp.DesiredAmountOfSignals)CreateSignal(comp);
-            int additional = _random.Next(0,comp.SignalAmountVariance);
-            for(int i=0;i<additional;i++)CreateSignal(comp);
+            if (comp.SignalList.Count - comp.DesiredAmountOfSignals <= comp.SignalAmountVariance) continue;
+            while (comp.SignalList.Count < comp.DesiredAmountOfSignals) CreateSignal(comp);
+            int additional = _random.Next(0, comp.SignalAmountVariance);
+            for (int i = 0; i < additional; i++) CreateSignal(comp);
         }
     }
     public void SetupMapSignals(EntityUid uid)//this si called in case the map lacks the component
     {
-        EntityUid MapUid = _MapSys.GetMapOrInvalid(Transform(uid).MapID);
-        EnsureComp<SignalMapComponent>(MapUid);//ensure the map of the station has signals
+        EntityUid mapUid = _mapSys.GetMapOrInvalid(Transform(uid).MapID);
+        EnsureComp<SignalMapComponent>(mapUid);//ensure the map of the station has signals
         return;
     }
     public void CreateSignal(SignalMapComponent signalMapComp)
     {
-        TimeSpan disaperanceTime = TimeSpan.FromMinutes(_random.NextFloat(signalMapComp.SignalDurationMin,signalMapComp.SignalDurationMax)) + _gameTiming.RealTime;
+        TimeSpan disaperanceTime = TimeSpan.FromMinutes(_random.NextFloat(signalMapComp.SignalDurationMin, signalMapComp.SignalDurationMax)) + _gameTiming.RealTime;
         //MAgic numbers, for the degrees any higher or lower makes no SENCE!!! oddly enought would not braek anything
-        Signal newSignal = new Signal(_random.NextFloat(0.0f,360.0f),_random.NextFloat(signalMapComp.SingalPointsMin,signalMapComp.SingalPointsMax),disaperanceTime);
+        Signal newSignal = new Signal(_random.NextFloat(0.0f, 360.0f), _random.NextFloat(signalMapComp.SingalPointsMin, signalMapComp.SingalPointsMax), disaperanceTime);
         signalMapComp.SignalList.Add(newSignal);
     }
 }

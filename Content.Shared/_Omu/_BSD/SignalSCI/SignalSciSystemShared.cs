@@ -4,7 +4,7 @@ namespace Content.Shared._Omu._BSD.SignalSCI;
 
 public sealed partial class SignalSCISystem : EntitySystem
 {
-    public void HarvestSignal(EntityUid uid,SignalSciDishComponent comp)
+    public void HarvestSignal(EntityUid uid, SignalSciDishComponent comp)
     {
         SignalHarvestingEvent ev = new SignalHarvestingEvent();
         RaiseLocalEvent(uid, ref ev, true);

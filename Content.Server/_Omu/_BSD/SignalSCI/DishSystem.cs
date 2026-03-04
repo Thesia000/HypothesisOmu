@@ -32,7 +32,8 @@ public sealed partial class SignalDishSystem : EntitySystem
             for (int move = 0; move < comp.SignalList.Count; move++)
             {
                 float efficency = 1.0f;
-                if (dishComp.Angle - comp.SignalList[move].Angle !=0.0f){
+                if (dishComp.Angle - comp.SignalList[move].Angle != 0.0f)
+                {
                     //the magic numbers used here are used to achive a repaeating tan function that has a periodicity of 360.0f currently fine tuned for a 6 degree missaligment before penelties
                     efficency = MathF.Min(MathF.Abs(MathF.Tan((dishComp.Angle - comp.SignalList[move].Angle + 180.0f) / (4.0f * 180.0f / (2 * (float)MathF.PI))) / 10.0f), 1.0f);
                 }
